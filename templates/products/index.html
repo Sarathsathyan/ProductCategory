@@ -1,0 +1,388 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div id="wrapper" class="admin-panel">
+
+
+    <div class="page-content">
+            <div class="page-content-inner">
+                <div class="row">
+                  <div class="col-md-7" >
+                    <div class="uk-width-4-4@m my-3">
+                        <div class="card rounded">
+                          <div class=" py-2 px-4">
+                              <h4 class="mb-0">Create Category </h4>
+
+                          </div>
+                          <hr class="m-0">
+                          <div class=" container py-3 uk-width-expand">
+                            <form name="categorycreate" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                                <fieldset class="uk-fieldset">
+
+
+                                    <div class="uk-margin mt-2">
+                                        <input class="uk-input bg-secondary" name="name" type="text" placeholder="Type Category Here" required>
+                                    </div>
+
+                                    <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="short_description">Category Image</label>
+                                            <div class="col-md-9">
+                                                <input type="file" id="real-file" name="cate_image"
+                                                 hidden="hidden"/>
+                                             <a class="btn btn-default mb-3"  onclick="" id="Upload-button"> <i
+                                                class='uil-plus'></i>Upload</a>
+                                                <span id="custom-text">No file choosen</span>
+
+                                                <script type="text/javascript">
+                                const realFileBtn = document.getElementById("real-file");
+                                const CustomBtn = document.getElementById("Upload-button");
+                                const customTxt = document.getElementById("custom-text");
+                                                CustomBtn.addEventListener ("click", function() {
+                                                realFileBtn.click()
+
+                                                });
+
+                                                realFileBtn.addEventListener("change", function() {
+                                              if (realFileBtn.value) {
+                                                customTxt.innerHTML = realFileBtn.value.match(
+                                                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                                                )[1];
+                                              } else {
+                                                customTxt.innerHTML = "No file chosen, yet.";
+                                              }
+                                            });
+
+                                                </script>
+
+                                            </div>
+                                        </div>
+
+
+                                    <div class="text-center">
+                                      <button class="btn btn-default" name="category">Add Category</button>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="uk-width-expand my-5">
+                        <div class="card rounded">
+                          <div class=" py-2 px-4">
+                              <h4 class="mb-0"> Create Products </h4>
+
+                          </div>
+                          <hr class="m-0">
+                          <div class=" container mt-2 py-3 px-5 uk-width-expand">
+                            <form name="cfpcreate" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                                <fieldset class="uk-fieldset">
+
+                                    <!-- <legend class="uk-legend mt-4 text-center">Create CFP</legend> -->
+
+
+                                    <div class="uk-margin uk-width-1-2">
+                                        <select name="cate_name" class="uk-select" required>
+                                            <option disabled selected value>Choose Category</option>
+                                            {% for cag in category_list %}
+                                            <option value="{{cag.pk}}">{{cag.cate_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="uk-margin">
+                                        <input class="uk-input bg-secondary" name="prod_name" type="text" placeholder="Product Name" required>
+                                    </div>
+                                        {#          Product image begining                 #}
+                                <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="short_description">Product Image</label>
+                                            <div class="col-md-9">
+                                                <input type="file" id="real-file1" name="prod_image"
+                                                 hidden="hidden"/>
+                                             <a class="btn btn-default mb-3"  onclick="" id="Upload-button1"> <i
+                                                class='uil-plus'></i>Upload product</a>
+                                                <span id="custom-text1">No file choosen</span>
+
+                                                <script type="text/javascript">
+                                const realFileBtn1 = document.getElementById("real-file1");
+                                const CustomBtn1 = document.getElementById("Upload-button1");
+                                const customTxt1 = document.getElementById("custom-text1");
+                                                CustomBtn1.addEventListener ("click", function() {
+                                                realFileBtn1.click()
+
+                                                });
+
+                                                realFileBtn1.addEventListener("change", function() {
+                                              if (realFileBtn1.value) {
+                                                customTxt1.innerHTML = realFileBtn1.value.match(
+                                                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                                                )[1];
+                                              } else {
+                                                customTxt1.innerHTML = "No file chosen, yet.";
+                                              }
+                                            });
+
+                                                </script>
+
+                                            </div>
+                                        </div>
+                                        {#    product image ends       #}
+
+                                    <div class="uk-margin">
+                                        <input type="number" class="uk-input bg-secondary" name="prod_price" type="text" placeholder="Product price" required>
+                                    </div>
+                                    <h5>Add Features</h5>
+                                        <div class="uk-width-expand my-3">
+
+
+
+
+                                                <table id="SkillsTable" class="uk-width-expand">
+                                                  <thead>
+                                                    <tr>
+                                                      <td><input type='text' class='uk-input1'
+                                                          placeholder="Add feature"></td>
+                                                    </tr>
+                                                  </thead>
+                                                </table>
+                                                <a class="btn btn-default text-white  mb-3" type="button" id="addSkillRow" onclick="addSkillRow()"><i
+                                                        class='uil-plus'></i>Add more </a>
+                                                <a class="btn btn-default text-white  mb-3" type="button" id="delSkillRow" onclick="delSkillRow()"><i
+                                                        class='uil-times'></i>Delete </a>
+
+                                                <input type="hidden" name="cfp_course" id="sout"  value='Output:'>
+
+                                        </div>
+                                    <h5>Description</h5>
+                                    <div class="uk-form-controls">
+                                            <!-- <input class="uk-input" id="form-stacked-text" type="text" placeholder="Some text..."> -->
+                                            <textarea class="uk-textarea" name="pro_descrip" rows="4"  required></textarea>
+                                    </div>
+
+                                    <br>
+                                    <div class="text-center">
+                                      <button class="btn btn-default" name="product_submit" onclick="Skillsubmit()">Create Product</button>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                            <div class="my-2">
+                              <h4>Note:</h4>
+                              <ul>
+                                <li>If you want to delete the last feature or cells click on "Delete" button</li>
+                                <li>If you want to delete the feature that is placed in between other features leave that cell empty</li>
+                              </ul>
+                            </div>
+
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+                  <div  class="col-md-5 my-3">
+
+                    <div class="uk-width-expand">
+                        <div class="card rounded">
+                          <div class=" py-2 px-4">
+                              <h4 class="mb-0">List of Category </h4>
+
+                          </div>
+                          <hr class="m-0">
+                          <div class=" container py-4 uk-width-expand">
+
+
+
+
+                                <table class="uk-table uk-table-small uk-table-hover uk-table-striped" uk-table-divider" >
+                                  <thead>
+                                      <tr>
+                                          <th>Id</th>
+                                          <th>Category</th>
+                                          <th>Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for item in category_list %}
+
+                                      <tr>
+                                        <td>{{item.pk}}</td>
+                                        <td>{{item.cate_name}}</td>
+                                        <td><a href="{% url 'category_edit' item.pk %}" class="btn btn-default">Edit</a></td>
+                                      </tr>
+
+
+
+                                      {% endfor %}
+
+                                  </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="uk-width-expand my-3">
+                        <div class="card rounded">
+                          <div class=" container py-4 uk-width-expand">
+
+                                <div class="d-flex uk-flex-center">
+                                  <div class="col-md-8 my-auto">
+                                      <legend class="uk-legend">List Of Products</legend>
+                                  </div>
+
+
+                                </div>
+
+                                <hr style="width:70% mx-auto mt-0">
+
+                                <table class="uk-table uk-table-small uk-table-hover uk-table-striped" uk-table-divider>
+                                  <thead>
+                                      <tr>
+                                          <th>Category</th>
+                                          <th>Product</th>
+                                          <th>Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    {% for item in prod_list %}
+
+                                      <tr>
+                                        <td>{{item.c_id.cate_name}}</td>
+                                        <td>{{item.pro_name}}</td>
+                                        <td><a href="{% url 'product_edit' item.pk %}" class="btn btn-default">View/Edit</a></td>
+                                      </tr>
+
+                                      {% endfor %}
+                                  </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                  </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <script>
+
+
+            (function (window, document, undefined) {
+                'use strict';
+                if (!('localStorage' in window)) return;
+                var nightMode = localStorage.getItem('gmtNightMode');
+                if (nightMode) {
+                    document.documentElement.className += ' night-mode';
+                }
+            })(window, document);
+
+
+
+
+
+          // now, add a new to the TABLE.
+          function addSkillRow() {
+              var empTab = document.getElementById('SkillsTable');
+
+              var rowCnt = empTab.rows.length;   // table row count.
+              var tr = empTab.insertRow(rowCnt); // the table row.
+              // tr = empTab.insertRow(rowCnt);
+
+              for (var c = 0; c < 1; c++) {
+                  var td = document.createElement('td'); // table definition.
+                  td = tr.insertCell(c);
+                      var ele = document.createElement('input');
+                      ele.setAttribute('type', 'text');
+                      ele.setAttribute('placeholder', 'Add Course Tag');
+                      td.appendChild(ele);
+
+              }
+          }
+
+
+          //To delete skills in the table
+          function delSkillRow() {
+              var empTab = document.getElementById('SkillsTable');
+
+              var rowCnt = empTab.rows.length;   // table row count.
+              var tr ; // the table row.
+              tr = empTab.deleteRow(rowCnt-1);
+              // rowCnt = empTab.rows.length;
+              // tr = empTab.deleteRow(rowCnt-1);
+
+
+          }
+
+
+          // function to extract and submit table data.
+          function Skillsubmit() {
+              var myTab = document.getElementById('SkillsTable');
+              var arrValues =new Array()
+
+              // loop through each row of the table.
+              for (row = 0; row < myTab.rows.length ; row++) {
+                // loop through each cell in a row.
+                  for (c = 0; c < myTab.rows[row].cells.length; c++) {
+                      var element = myTab.rows.item(row).cells[c];
+                      if (element.childNodes[0].getAttribute('type') == 'text') {
+                          arrValues.push(element.childNodes[0].value);
+                      }
+                  }
+              }
+
+              var str="";
+              for(i=0;i<arrValues.length;i++)
+              {
+                  len=arrValues[i].trim().length
+                  if (len==0)
+                  {
+                    continue;
+                  }
+                  else{
+                    str=str.concat(arrValues[i]);
+                    str=str+'_';
+
+                  }
+
+              }
+
+              req_str=str.substring(0,str.length-1)
+
+              // The final output.
+              // document.getElementById('Reqoutput').innerHTML = req_str;
+
+              var ele1=document.getElementById('sout');
+              ele1.setAttribute('value',req_str);
+          }
+        </script>
+
+
+    </div>
+{% endblock %}

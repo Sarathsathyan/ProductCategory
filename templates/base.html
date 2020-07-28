@@ -1,0 +1,40 @@
+{% load static %}
+{#Base file#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Category-Products |{% block title %}{% endblock %}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block extrahead %}
+    {% endblock %}
+    <!-- CSS ================================================== -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/night-mode.css' %}">
+    <link rel="stylesheet" href="{% static 'css/framework.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button-style.css' %}">
+    <!-- icons
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'css/icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bowlby+One" />
+    <link rel = "stylesheet" href ="{% static 'css/video-js.min.css' %}">
+</head>
+<body>
+<!-- Body -->
+
+{% block content %}
+
+
+{% endblock %}
+
+
+<script src="{% static 'js/framework.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/simplebar.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+</body>
+</html>
