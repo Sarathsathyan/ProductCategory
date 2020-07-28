@@ -46,7 +46,13 @@ def CategoryEdit(request,id):
             datas = Category.objects.get(id=id)
             datas.cate_name = new_category
             datas.save()
-
+        if 'change_img' in request.POST:
+            i_id = request.POST['idd']
+            cate_img = request.FILES.get('pro_image')
+            datas = Category.objects.get(id=i_id)
+            datas.cate_image  = cate_img
+            datas.save()
+            return redirect('category_edit',cfp_id)
     context ={
         'datas': datas
     }
@@ -68,26 +74,28 @@ def productEdit(request,id):
             pro_price = request.POST['pro_price']
             pro_descrip= request.POST['pro_descrip']
             pro_feature = request.POST['cfp_course']
-            pro_image = request.FILES.get('pro_image',None)
+
 
             details = Products.objects.get(id = p_id)
             details.pro_name = pro_name
             details.product_price = pro_price
             details.prod_description = pro_descrip
             details.produ_features = pro_feature
-            if pro_image is not None:
-                datas.pro_image = pro_image
-
-            details.pro_image = pro_image
 
             details.save()
             return redirect('product_edit',p_id)
+        if 'change_img' in request.POST:
+            pro_image = request.FILES.get('pro_image')
+            details = Products.objects.get(id=p_id)
+            details.pro_image = pro_image
+            details.save()
+            return redirect('product_edit',p_id)
+
 
         if 'pro_delete' in request.POST:
             del_id = request.POST['delete_id']
             obj = Products.objects.filter(id=del_id)
             obj.delete()
-
             return redirect('index')
 
 

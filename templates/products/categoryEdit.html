@@ -1,18 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% load static %}
 
 {% block content %}
-
+    <style>
+    .img1{
+        width: 45%;
+    }
+    </style>
     <div id="wrapper" class="admin-panel">
 
 
     <div class="page-content">
+     <form name="careeredit" method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
             <div class="page-content-inner">
 
                 <div class="d-flex">
                     <nav id="breadcrumbs" class="mb-3">
                         <ul>
-                            <li><a href="#"> <i class="uil-home-alt"></i> </a></li>
-                            <li><a href="#"> Category/CFP Creation </a></li>
+                            <li><a href="{% url 'index' %}"> <i class="uil-home-alt"></i> Dashboard</a></li>
+                            <li><a href="#">  </a></li>
                         </ul>
                     </nav>
                 </div>
@@ -27,8 +33,7 @@
                     <div class="uk-width-expand my-5">
                         <div class="card rounded">
                           <div class=" container py-3 px-5 uk-width-expand">
-                            <form name="careeredit" method="POST">
-                              {% csrf_token %}
+
                                 <fieldset class="uk-fieldset">
 
                                     <legend class="uk-legend mt-4 text-center">Change Category Name</legend>
@@ -46,14 +51,90 @@
 
                                     </div>
                                 </fieldset>
-                            </form>
+
                             </div>
                         </div>
                     </div>
                   </div>
 
 
+                 <div class="uk-width-4-4@m my-3 img1">
+                        <div class="card rounded">
+                          <div class=" py-2 px-4">
+                              <h4 class="mb-0">Category Image </h4>
 
+                          </div>
+                          <hr class="m-0">
+                          <div class=" container py-3 uk-width-expand">
+                              {% csrf_token %}
+                                <fieldset class="uk-fieldset">
+
+                                 {% if datas.cate_image %}
+                                        <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="short_description">Category Image</label>
+                                            <div class="col-md-9">
+
+                                              <div class=" ">
+                                                <img src="{{datas.cate_image.url}}" alt="No image">
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="short_description">Change Image</label>
+                                            <div class="col-md-9">
+                                                <input type="file" id="real-file" name="pro_image"
+                                                hidden="hidden"/>
+                                                <a class="btn btn-default mb-3"  onclick="" id="Upload-button"> <i
+                                                    class='uil-plus'>
+
+                                                </i>Upload</a>
+                                                <span id="custom-text">No file choosen</span>
+                                                <input type="hidden" value="{{ datas.pk }}" name="idd">
+                                                <button class="btn btn-default " name="change_img">Save</button>
+
+                                            </div>
+                                        </div>
+                                 {% else %}
+                                        <div class="form-group row mb-3">
+                                            <label class="col-md-3 col-form-label" for="short_description">Product Image</label>
+                                            <div class="col-md-9">
+                                                <input type="file" id="real-file" name="pro_image"
+                                                hidden="hidden"/>
+                                                <a class="btn btn-default mb-3"  onclick="" id="Upload-button"> <i
+                                                    class='uil-plus'>
+
+                                                </i>Upload</a>
+                                                <span id="custom-text">No file choosen</span>
+
+
+
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                 <script type="text/javascript">
+                                                const realFileBtn = document.getElementById("real-file");
+                                                const CustomBtn = document.getElementById("Upload-button");
+                                                const customTxt = document.getElementById("custom-text");
+                                                CustomBtn.addEventListener ("click", function() {
+                                                realFileBtn.click()
+
+                                                });
+
+                                                realFileBtn.addEventListener("change", function() {
+                                              if (realFileBtn.value) {
+                                                customTxt.innerHTML = realFileBtn.value.match(
+                                                  /[\/\\]([\w\d\s\.\-\(\)]+)$/
+                                                )[1];
+                                              } else {
+                                                customTxt.innerHTML = "No file chosen, yet.";
+                                              }
+                                            });
+
+                                                </script>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -71,6 +152,7 @@
 
 
             </div>
+    </form>
 
         </div>
 

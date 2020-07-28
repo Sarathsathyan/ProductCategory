@@ -13,6 +13,15 @@
     <form name="proedit" method="POST" enctype="multipart/form-data">
                               {% csrf_token %}
             <div class="page-content-inner">
+            <div class="d-flex">
+                    <nav id="breadcrumbs" class="mb-3">
+                        <ul>
+                            <li><a href="{% url 'index' %}"> <i class="uil-home-alt"></i> Dashboard</a></li>
+                            <li><a href="#"> Category/Product edit </a></li>
+                            <li>Product edit </li>
+                        </ul>
+                    </nav>
+                </div>
 
 
                 <div class="uk-grid">
@@ -63,7 +72,7 @@
                                                     {% for i in role_list %}
                                                     <tr>
                                                       <td><input type='text' class='uk-input1'
-                                                          value="{{i}}" placeholder="Add Course Tag"></td>
+                                                          value="{{i}}" placeholder="Add feature"></td>
                                                     </tr>
                                                     {% endfor %}
 
@@ -124,10 +133,11 @@
 
                                                 </i>Upload</a>
                                                 <span id="custom-text">No file choosen</span>
+                                                <button class="btn btn-default " name="change_img">Save</button>
 
                                             </div>
                                         </div>
-                                        {% else %}
+                                 {% else %}
                                         <div class="form-group row mb-3">
                                             <label class="col-md-3 col-form-label" for="short_description">Product Image</label>
                                             <div class="col-md-9">
@@ -269,7 +279,7 @@
                   td = tr.insertCell(c);
                       var ele = document.createElement('input');
                       ele.setAttribute('type', 'text');
-                      ele.setAttribute('placeholder', 'Add Course Tag');
+                      ele.setAttribute('placeholder', 'Add Feature');
                       td.appendChild(ele);
 
               }
